@@ -1,74 +1,119 @@
-######################
-# IntelliJ
-######################
-.gradle
-.classpath
-.settings
+############################################
+# GLOBAL
+############################################
+
+# OS
+.DS_Store
+.DS_Store?
+Thumbs.db
+.Spotlight-V100
+.Trashes
+
+# Logs
+*.log
+logs/
+
+############################################
+# IDEs
+############################################
 .idea/
 *.iml
 *.iws
 *.ipr
 *.ids
 *.orig
+.vscode/
+*.code-workspace
 classes/
 out/
+.classpath
+.settings/
 
-
-######################
-# Package Files
-######################
+############################################
+# temp
+############################################
 *.jar
 *.war
 *.ear
-*.db
-
-######################
-# Mac OSX
-######################
-.DS_Store
-.svn
-
-######################
-# Others
-######################
 *.class
-*.*~
+*.db
 *~
+*.*~
 .merge_file*
 
-######################
-# Maven Wrapper
-######################
-/log/
-target/
-.mvn/wrapper/maven-wrapper.jar
-!**/src/main/**/target/
-!**/src/test/**/target/
+############################################
+# SECRETS / ENV (GLOBAL)
+############################################
+.env
+.env.*
+*.pem
+*.key
+*.crt
+*.keystore
+*.jks
+*.p12
 
-######################
-# STS
-######################
-.apt_generated
-.classpath
-.factorypath
-.project
-.settings
-.springBeans
-.sts4-cache
+############################################
+# BACKEND — Spring Boot 4.0.2 (Java 25, Maven)
+############################################
 
-######################
-# NetBeans
-######################
-/nbproject/private/
-/nbbuild/
-/dist/
-/nbdist/
-/.nb-gradle/
-build/
-!**/src/main/**/build/
-!**/src/test/**/build/
+# Maven build output
+backend/target/
 
-######################
-# VS CODE
-######################
-.vscode/
+# Maven internals
+backend/.mvn/timing.properties
+backend/dependency-reduced-pom.xml
+backend/pom.xml.tag
+backend/pom.xml.releaseBackup
+backend/pom.xml.versionsBackup
+backend/pom.xml.next
+
+# JVM crash files
+backend/hs_err_pid*
+backend/replay_pid*
+
+# Spring Boot profiles (application.properties IS committed)
+backend/src/main/resources/application-*.yml
+backend/src/main/resources/application-*.yaml
+backend/src/main/resources/application-*.properties
+
+############################################
+# FRONTEND — Next.js 16.1.6 + Turbopack
+############################################
+
+# Dependencies
+frontend/node_modules/
+
+# Build output
+frontend/.next/
+frontend/out/
+frontend/dist/
+frontend/build/
+
+# Turbopack / Next caches
+frontend/.turbo/
+frontend/.cache/
+frontend/.swc/
+
+# Logs
+frontend/npm-debug.log*
+frontend/yarn-debug.log*
+frontend/pnpm-debug.log*
+
+# Next.js env files
+frontend/.env
+frontend/.env.*
+frontend/!.env.example
+
+############################################
+# TEST / COVERAGE
+############################################
+coverage/
+backend/jacoco/
+backend/jacoco.exec
+
+############################################
+# DOCKER
+############################################
+docker-compose.override.yml
+docker-compose.local.yml
