@@ -45,7 +45,7 @@ out/
 # SECRETS / ENV (GLOBAL)
 ############################################
 .env
-.env.*
+.env.local
 *.pem
 *.key
 *.crt
