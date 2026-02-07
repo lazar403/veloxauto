@@ -1,0 +1,11 @@
+first_name,last_name,username,email,password,phone_number,created_at
+Lazar,Petrovic,lpetrovic,lazar.petrovic@gmail.com,password123,+38160111222,2026-02-01 10:15:00
+Marko,Jovanovic,mjovanovic,marko.jovanovic@gmail.com,password123,+38160111333,2026-02-01 11:20:00
+Nikola,Stojic,nstojic,nikola.stojic@gmail.com,password123,+38160111444,2026-02-02 09:05:00
+Stefan,Ilic,silic,stefan.ilic@gmail.com,password123,+38160111555,2026-02-02 14:30:00
+Milos,Markovic,mmarkovic,milos.markovic@gmail.com,password123,+38160111666,2026-02-03 08:45:00
+Ana,Nikolic,anikolic,ana.nikolic@gmail.com,password123,+38160111777,2026-02-03 12:10:00
+Jelena,Tomic,jtomic,jelena.tomic@gmail.com,password123,+38160111888,2026-02-04 16:55:00
+Ivana,Pavlovic,ipavlovic,ivana.pavlovic@gmail.com,password123,+38160111999,2026-02-05 10:00:00
+Petar,Simic,psimic,petar.simic@gmail.com,password123,+38160112000,2026-02-05 13:40:00
+Nemanja,Zivkovic,nzivkovic,nemanja.zivkovic@gmail.com,password123,+38160112111,2026-02-06 09:25:00
