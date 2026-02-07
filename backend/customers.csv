@@ -1,11 +1,11 @@
-first_name,last_name,username,email,password,phone_number,created_at
-Lazar,Petrovic,lpetrovic,lazar.petrovic@gmail.com,password123,+38160111222,2026-02-01 10:15:00
-Marko,Jovanovic,mjovanovic,marko.jovanovic@gmail.com,password123,+38160111333,2026-02-01 11:20:00
-Nikola,Stojic,nstojic,nikola.stojic@gmail.com,password123,+38160111444,2026-02-02 09:05:00
-Stefan,Ilic,silic,stefan.ilic@gmail.com,password123,+38160111555,2026-02-02 14:30:00
-Milos,Markovic,mmarkovic,milos.markovic@gmail.com,password123,+38160111666,2026-02-03 08:45:00
-Ana,Nikolic,anikolic,ana.nikolic@gmail.com,password123,+38160111777,2026-02-03 12:10:00
-Jelena,Tomic,jtomic,jelena.tomic@gmail.com,password123,+38160111888,2026-02-04 16:55:00
-Ivana,Pavlovic,ipavlovic,ivana.pavlovic@gmail.com,password123,+38160111999,2026-02-05 10:00:00
-Petar,Simic,psimic,petar.simic@gmail.com,password123,+38160112000,2026-02-05 13:40:00
-Nemanja,Zivkovic,nzivkovic,nemanja.zivkovic@gmail.com,password123,+38160112111,2026-02-06 09:25:00
+first_name,last_name,email,password,phone_number,is_active,role,created_at
+Test1,User1,testuser1@example.com,password123,+381601000001,true,CUSTOMER,2026-02-01 10:15:00
+Test2,User2,testuser2@example.com,password123,+381601000002,true,CUSTOMER,2026-02-01 11:20:00
+Test3,User3,testuser3@example.com,password123,+381601000003,true,CUSTOMER,2026-02-02 09:05:00
+Test4,User4,testuser4@example.com,password123,+381601000004,true,CUSTOMER,2026-02-02 14:30:00
+Test5,User5,testuser5@example.com,password123,+381601000005,true,CUSTOMER,2026-02-03 08:45:00
+Test6,User6,testuser6@example.com,password123,+381601000006,true,CUSTOMER,2026-02-03 12:10:00
+Test7,User7,testuser7@example.com,password123,+381601000007,true,CUSTOMER,2026-02-04 16:55:00
+Test8,User8,testuser8@example.com,password123,+381601000008,true,CUSTOMER,2026-02-05 10:00:00
+Test9,User9,testuser9@example.com,password123,+381601000009,true,CUSTOMER,2026-02-05 13:40:00
+Test10,User10,testuser10@example.com,password123,+381601000010,true,CUSTOMER,2026-02-06 09:25:00
