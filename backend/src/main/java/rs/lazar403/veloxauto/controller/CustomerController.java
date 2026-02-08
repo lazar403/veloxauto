@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import rs.lazar403.veloxauto.dto.customer.CustomerCreateRequest;
 import rs.lazar403.veloxauto.dto.customer.CustomerResponse;
-import rs.lazar403.veloxauto.model.Customer;
 import rs.lazar403.veloxauto.service.CustomerService;
 
 import java.util.List;

@@ -3,7 +3,6 @@ package rs.lazar403.veloxauto.service;
 
 import rs.lazar403.veloxauto.dto.customer.CustomerCreateRequest;
 import rs.lazar403.veloxauto.dto.customer.CustomerResponse;
-import rs.lazar403.veloxauto.model.Customer;
 
 import java.util.List;
 
