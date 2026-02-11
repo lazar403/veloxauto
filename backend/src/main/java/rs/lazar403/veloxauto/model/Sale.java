@@ -123,6 +123,9 @@ public class Sale {
     }
 
     public BigDecimal getOriginalPrice() {
+        if (finalPrice == null) {
+            return null;
+        }
         return finalPrice.add(discount != null ? discount : BigDecimal.ZERO);
     }
 }

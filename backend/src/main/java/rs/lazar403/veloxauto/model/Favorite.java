@@ -48,8 +48,19 @@ public class Favorite {
     @Column(name = "created_at", nullable = false, updatable = false)
     private LocalDateTime createdAt;
 
-    // [======== CONSTRUCTOR HELPER ========]
+    // [======== FACTORY METHOD ========]
+    /**
+     * Creates a Favorite entity. Both customer and vehicle must be persisted (have non-null IDs).
+     *
+     * @throws IllegalArgumentException if customer/vehicle is null or not persisted
+     */
     public static Favorite create(Customer customer, Vehicle vehicle) {
+        if (customer == null || customer.getId() == null) {
+            throw new IllegalArgumentException("Customer must be persisted before creating a favorite");
+        }
+        if (vehicle == null || vehicle.getId() == null) {
+            throw new IllegalArgumentException("Vehicle must be persisted before creating a favorite");
+        }
         Favorite favorite = new Favorite();
         favorite.setId(new FavoriteId(customer.getId(), vehicle.getId()));
         favorite.setCustomer(customer);

@@ -87,10 +87,16 @@ public class Reservation {
 
     // [======== HELPER METHODS ========]
     public boolean isActive() {
-        return status == ReservationStatus.ACTIVE && LocalDateTime.now().isBefore(expiresAt);
+        if (expiresAt == null || status != ReservationStatus.ACTIVE) {
+            return false;
+        }
+        return LocalDateTime.now().isBefore(expiresAt);
     }
 
     public boolean isExpired() {
+        if (expiresAt == null) {
+            return false;
+        }
         return LocalDateTime.now().isAfter(expiresAt);
     }
 }
