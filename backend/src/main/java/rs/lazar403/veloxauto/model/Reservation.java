@@ -65,6 +65,7 @@ public class Reservation {
     @NotNull(message = "Status is required")
     @Enumerated(EnumType.STRING)
     @Column(nullable = false, length = 20)
+    @Builder.Default
     private ReservationStatus status = ReservationStatus.ACTIVE;
 
     @Size(max = 500, message = "Notes must not exceed 500 characters")
