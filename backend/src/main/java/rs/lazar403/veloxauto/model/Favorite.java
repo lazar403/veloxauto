@@ -9,8 +9,8 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.MapsId;
 import jakarta.persistence.Table;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
+import jakarta.validation.constraints.NotNull;
+import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -20,8 +20,7 @@ import java.time.LocalDateTime;
 
 @Entity
 @Getter @Setter
-@Builder
-@AllArgsConstructor @NoArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Table(
         name = "favorites",
         indexes = {
@@ -34,11 +33,13 @@ public class Favorite {
     @EmbeddedId
     private FavoriteId id;
 
+    @NotNull(message = "Customer must not be null")
     @ManyToOne(fetch = FetchType.LAZY)
     @MapsId("customerId")
     @JoinColumn(name = "customer_id", nullable = false)
     private Customer customer;
 
+    @NotNull(message = "Vehicle must not be null")
     @ManyToOne(fetch = FetchType.LAZY)
     @MapsId("vehicleId")
     @JoinColumn(name = "vehicle_id", nullable = false)

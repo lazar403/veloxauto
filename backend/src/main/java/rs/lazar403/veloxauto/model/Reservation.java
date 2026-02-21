@@ -13,7 +13,6 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import jakarta.persistence.Version;
-import jakarta.validation.constraints.Future;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
@@ -58,7 +57,6 @@ public class Reservation {
 
     // [======== RESERVATION DETAILS ========]
     @NotNull(message = "Expiration date is required")
-    @Future(message = "Expiration date must be in the future")
     @Column(name = "expires_at", nullable = false)
     private LocalDateTime expiresAt;
 
@@ -94,7 +92,7 @@ public class Reservation {
     }
 
     public boolean isExpired() {
-        if (expiresAt == null) {
+        if (expiresAt == null || status != ReservationStatus.ACTIVE) {
             return false;
         }
         return LocalDateTime.now().isAfter(expiresAt);
