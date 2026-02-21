@@ -12,6 +12,8 @@ import jakarta.persistence.Index;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToOne;
+import jakarta.persistence.PrePersist;
+import jakarta.persistence.PostLoad;
 import jakarta.persistence.Table;
 import jakarta.persistence.Version;
 import jakarta.validation.constraints.DecimalMin;
@@ -74,7 +76,7 @@ public class Sale {
 
     @DecimalMin(value = "0.0", message = "Discount cannot be negative")
     @Digits(integer = 10, fraction = 2, message = "Discount must be a valid monetary amount")
-    @Column(precision = 12, scale = 2)
+    @Column(nullable = false, precision = 12, scale = 2)
     @Builder.Default
     private BigDecimal discount = BigDecimal.ZERO;
 
@@ -112,13 +114,34 @@ public class Sale {
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
 
+    // [======== LIFECYCLE ========]
+    @PrePersist
+    @PostLoad
+    private void ensureDiscountNotNull() {
+        if (discount == null) {
+            discount = BigDecimal.ZERO;
+        }
+    }
+
     // [======== HELPER METHODS ========]
     public void complete() {
+        if (status == SaleStatus.COMPLETED) {
+            throw new IllegalStateException("Sale is already completed");
+        }
+        if (status == SaleStatus.CANCELED) {
+            throw new IllegalStateException("Cannot complete a canceled sale");
+        }
         this.status = SaleStatus.COMPLETED;
         this.completedAt = LocalDateTime.now();
     }
 
     public void cancel() {
+        if (status == SaleStatus.CANCELED) {
+            throw new IllegalStateException("Sale is already canceled");
+        }
+        if (status == SaleStatus.COMPLETED) {
+            throw new IllegalStateException("Cannot cancel a completed sale");
+        }
         this.status = SaleStatus.CANCELED;
     }
 
@@ -126,6 +149,6 @@ public class Sale {
         if (finalPrice == null) {
             return null;
         }
-        return finalPrice.add(discount != null ? discount : BigDecimal.ZERO);
+        return finalPrice.add(discount);
     }
 }
