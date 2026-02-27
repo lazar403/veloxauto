@@ -91,7 +91,7 @@ public class Reservation {
         return LocalDateTime.now().isBefore(expiresAt);
     }
 
-    public boolean isExpired() {
+    public boolean needsExpiration() {
         if (expiresAt == null || status != ReservationStatus.ACTIVE) {
             return false;
         }
