@@ -1,118 +1,64 @@
-# VeloxAuto 🚗
+# VeloxAuto
 
-VeloxAuto is a backend system for a car dealership platform built with **Spring Boot** and **PostgreSQL**.
-The project focuses on clean architecture, real-world business logic, and production-ready backend practices.
+Backend for a car dealership platform.  
+Built with Spring Boot and PostgreSQL, aiming to resemble a real-world backend rather than a demo.
 
-A **Next.js frontend** is planned and will consume this API as part of a full-stack dealership platform.
+A Next.js frontend is planned.
 
 ---
 
-## Tech Stack
+![Java](https://img.shields.io/badge/Java-25-blue)
+![Spring Boot](https://img.shields.io/badge/Spring%20Boot-4-brightgreen)
+![PostgreSQL](https://img.shields.io/badge/PostgreSQL-Neon-blue)
+![Status](https://img.shields.io/badge/status-in%20progress-yellow)
+
+---
+
+## Stack
 
 **Backend**
-
-* Java 25
-* Spring Boot 4
-* Spring Data JPA (Hibernate)
-* PostgreSQL (Neon)
-* MapStruct
-* Lombok
-* Maven
+- Spring Boot  
+- Spring Data JPA (Hibernate)  
+- PostgreSQL (Neon)  
+- MapStruct  
+- Lombok  
 
 **Frontend (planned)**
-
-* Next.js (TypeScript)
-* REST API integration
+- Next.js (TypeScript)  
 
 ---
 
-## Architecture
+## Structure
 
-Layered structure:
-
-```
-Controller → DTO → Service → Mapper → Entity
-```
----
-
-## Current Features
-
-### Customer Module
-
-* Customer CRUD
-* Email uniqueness validation
-* Role system (`CUSTOMER`, `ADMIN`, `SALE`)
-* Active status management
-* Audit fields (`createdAt`, `updatedAt`)
-* DTO layer + MapStruct mapping
+Simple layered structure, nothing unusual.
 
 ---
 
-## Planned Features (Roadmap)
 
-* Global exception handling
-* Authentication (JWT)
-* Vehicle management
-* Search & pagination
-* Reservations & sales workflow
-* Favorites
-* Activity logging
-* Admin operations
-* Next.js frontend integration
+## Run locally
 
----
 
-## Getting Started
-
-### 1. Clone
-
-```
+```bash
 git clone https://github.com/lazar403/veloxauto.git
-cd veloxauto/backend
+cd veloxauto/backendbash
 ```
 
-### 2. Configure `.env`
-
+Create .env:
 ```
-DB_URL=your_database_url
-DB_USERNAME=your_user
-DB_PASSWORD=your_password
+DB_URL=
+DB_USERNAME=
+DB_PASSWORD=
 PORT=8080
 ```
 
-### 3. Run
-
+Run:
 ```
 ./mvnw spring-boot:run
 ```
-
 ---
 
-## Example Endpoint
+## Notes & Contributing
 
-**POST /api/customers**
-
-```json
-{
-  "firstName": "TestFirst",
-  "lastName": "TestLast",
-  "email": "test@example.com",
-  "password": "password123",
-  "phoneNumber": "+381601234567"
-}
-```
-
----
-
-## Contributing
-
-1. Fork the repository
-2. Create a feature branch
-
-   ```
-   git checkout -b feature/your-feature
-   ```
-3. Use conventional commits:
-
-4. Open a Pull Request
-
+Work in progress.\
+Focus is on backend structure and realistic features. \
+PRs are welcome. Keep changes simple and readable.
