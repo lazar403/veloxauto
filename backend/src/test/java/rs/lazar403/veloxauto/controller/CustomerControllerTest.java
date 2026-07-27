@@ -1,4 +1,5 @@
 package rs.lazar403.veloxauto.controller;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -6,6 +7,7 @@ import org.springframework.boot.webmvc.test.autoconfigure.WebMvcTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
+import rs.lazar403.veloxauto.dto.common.PagedResponse;
 import rs.lazar403.veloxauto.dto.customer.CustomerCreateRequest;
 import rs.lazar403.veloxauto.dto.customer.CustomerResponse;
 import rs.lazar403.veloxauto.dto.customer.CustomerUpdateRequest;
@@ -33,7 +35,7 @@ class CustomerControllerTest {
     private MockMvc mockMvc;
 
     @Autowired
-    private tools.jackson.databind.ObjectMapper objectMapper;
+    private ObjectMapper objectMapper;
 
     @MockitoBean
     private CustomerService customerService;
@@ -117,21 +119,21 @@ class CustomerControllerTest {
     // [======== GET ALL ========]
 
     @Test
-    void getAllCustomers_shouldReturn200WithList() throws Exception {
-        // arrange: service returns a list of two customers
+    void getCustomers_shouldReturn200WithPage() throws Exception {
         CustomerResponse r1 = new CustomerResponse();
         r1.setId(1L);
         CustomerResponse r2 = new CustomerResponse();
         r2.setId(2L);
+        PagedResponse<CustomerResponse> page = new PagedResponse<>(List.of(r1, r2), 0, 20, 2, 1, true, true);
 
-        when(customerService.getAllCustomers()).thenReturn(List.of(r1, r2));
+        when(customerService.getCustomers(null, 0, 20, "createdAt", "desc")).thenReturn(page);
 
-        // assert: GET /api/customers returns 200 with array of size 2
         mockMvc.perform(get("/api/customers"))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.length()").value(2))
-                .andExpect(jsonPath("$[0].id").value(1))
-                .andExpect(jsonPath("$[1].id").value(2));
+                .andExpect(jsonPath("$.content.length()").value(2))
+                .andExpect(jsonPath("$.content[0].id").value(1))
+                .andExpect(jsonPath("$.content[1].id").value(2))
+                .andExpect(jsonPath("$.totalElements").value(2));
     }
 
     // [======== UPDATE ========]

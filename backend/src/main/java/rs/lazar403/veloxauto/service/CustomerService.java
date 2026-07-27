@@ -1,10 +1,9 @@
 package rs.lazar403.veloxauto.service;
 
+import rs.lazar403.veloxauto.dto.common.PagedResponse;
 import rs.lazar403.veloxauto.dto.customer.CustomerCreateRequest;
 import rs.lazar403.veloxauto.dto.customer.CustomerResponse;
 import rs.lazar403.veloxauto.dto.customer.CustomerUpdateRequest;
-
-import java.util.List;
 
 public interface CustomerService {
 
@@ -12,7 +11,7 @@ public interface CustomerService {
 
     CustomerResponse getCustomerById(Long id);
 
-    List<CustomerResponse> getAllCustomers();
+    PagedResponse<CustomerResponse> getCustomers(Boolean active, int page, int size, String sortBy, String sortDir);
 
     CustomerResponse updateCustomer(Long id, CustomerUpdateRequest request);
 
