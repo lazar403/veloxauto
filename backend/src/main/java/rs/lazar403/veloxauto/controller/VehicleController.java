@@ -11,13 +11,14 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import rs.lazar403.veloxauto.dto.common.PagedResponse;
 import rs.lazar403.veloxauto.dto.vehicle.VehicleCreateRequest;
 import rs.lazar403.veloxauto.dto.vehicle.VehicleResponse;
 import rs.lazar403.veloxauto.dto.vehicle.VehicleUpdateRequest;
+import rs.lazar403.veloxauto.enums.VehicleStatus;
 import rs.lazar403.veloxauto.service.VehicleService;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("/api/vehicles")
@@ -38,8 +39,15 @@ public class VehicleController {
     }
 
     @GetMapping
-    public ResponseEntity<List<VehicleResponse>> getAllVehicles() {
-        return ResponseEntity.ok(vehicleService.getAllVehicles());
+    public ResponseEntity<PagedResponse<VehicleResponse>> getVehicles(
+            @RequestParam(required = false) Boolean active,
+            @RequestParam(required = false) VehicleStatus status,
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "20") int size,
+            @RequestParam(defaultValue = "createdAt") String sortBy,
+            @RequestParam(defaultValue = "desc") String sortDir
+    ) {
+        return ResponseEntity.ok(vehicleService.getVehicles(active, status, page, size, sortBy, sortDir));
     }
 
     @PutMapping("/{id}")

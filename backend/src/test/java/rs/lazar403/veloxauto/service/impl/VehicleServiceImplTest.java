@@ -5,9 +5,14 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import rs.lazar403.veloxauto.dto.common.PagedResponse;
 import rs.lazar403.veloxauto.dto.vehicle.VehicleCreateRequest;
 import rs.lazar403.veloxauto.dto.vehicle.VehicleResponse;
 import rs.lazar403.veloxauto.dto.vehicle.VehicleUpdateRequest;
+import rs.lazar403.veloxauto.exception.ConflictException;
+import rs.lazar403.veloxauto.exception.NotFoundException;
 import rs.lazar403.veloxauto.mapper.VehicleMapper;
 import rs.lazar403.veloxauto.model.Customer;
 import rs.lazar403.veloxauto.model.Vehicle;
@@ -77,15 +82,13 @@ class VehicleServiceImplTest {
 
     @Test
     void createVehicle_withDuplicateVin_shouldThrow() {
-        // arrange: VIN already exists in DB
         VehicleCreateRequest request = new VehicleCreateRequest();
         request.setVin("DUPLICATE_VIN");
 
         when(vehicleRepository.existsByVin("DUPLICATE_VIN")).thenReturn(true);
 
-        // assert: should throw before any save or creator lookup
         assertThatThrownBy(() -> vehicleService.createVehicle(request))
-                .isInstanceOf(RuntimeException.class)
+                .isInstanceOf(ConflictException.class)
                 .hasMessage("VIN already exists.");
 
         verify(vehicleRepository, never()).save(any());
@@ -93,7 +96,6 @@ class VehicleServiceImplTest {
 
     @Test
     void createVehicle_withInvalidCreator_shouldThrow() {
-        // arrange: VIN is unique but creator ID doesn't exist
         VehicleCreateRequest request = new VehicleCreateRequest();
         request.setVin("1HGCM82633A004352");
         request.setCreatedById(999L);
@@ -103,7 +105,7 @@ class VehicleServiceImplTest {
 
         // assert
         assertThatThrownBy(() -> vehicleService.createVehicle(request))
-                .isInstanceOf(RuntimeException.class)
+                .isInstanceOf(NotFoundException.class)
                 .hasMessageContaining("Creator not found");
 
         verify(vehicleRepository, never()).save(any());
@@ -131,23 +133,28 @@ class VehicleServiceImplTest {
         when(vehicleRepository.findById(999L)).thenReturn(Optional.empty());
 
         assertThatThrownBy(() -> vehicleService.getVehicleById(999L))
-                .isInstanceOf(RuntimeException.class)
+                .isInstanceOf(NotFoundException.class)
                 .hasMessageContaining("Vehicle not found");
     }
-
+    // [======== GET VEHICLES ========]
     // [======== GET ALL ========]
 
     @Test
-    void getAllVehicles_shouldReturnMappedList() {
-        // arrange: repo returns two entities, mapper converts to response list
-        List<Vehicle> vehicles = List.of(new Vehicle(), new Vehicle());
-        List<VehicleResponse> expectedResponses = List.of(new VehicleResponse(), new VehicleResponse());
+    void getVehicles_shouldReturnMappedPage() {
+        Vehicle v1 = new Vehicle();
+        Vehicle v2 = new Vehicle();
+        Page<Vehicle> vehicles = new PageImpl<>(List.of(v1, v2));
 
-        when(vehicleRepository.findAll()).thenReturn(vehicles);
-        when(vehicleMapper.toResponseList(vehicles)).thenReturn(expectedResponses);
+        VehicleResponse r1 = new VehicleResponse();
+        VehicleResponse r2 = new VehicleResponse();
 
-        List<VehicleResponse> result = vehicleService.getAllVehicles();
-        assertThat(result).hasSize(2);
+        when(vehicleRepository.findAll(any())).thenReturn(vehicles);
+        when(vehicleMapper.toResponse(v1)).thenReturn(r1);
+        when(vehicleMapper.toResponse(v2)).thenReturn(r2);
+
+        PagedResponse<VehicleResponse> result = vehicleService.getVehicles(null, null, 0, 20, "createdAt", "desc");
+        assertThat(result.content()).hasSize(2);
+        assertThat(result.totalElements()).isEqualTo(2);
     }
 
     // [======== UPDATE ========]
@@ -184,7 +191,7 @@ class VehicleServiceImplTest {
         when(vehicleRepository.findById(999L)).thenReturn(Optional.empty());
 
         assertThatThrownBy(() -> vehicleService.updateVehicle(999L, new VehicleUpdateRequest()))
-                .isInstanceOf(RuntimeException.class)
+                .isInstanceOf(NotFoundException.class)
                 .hasMessageContaining("Vehicle not found");
     }
 
@@ -212,7 +219,7 @@ class VehicleServiceImplTest {
         when(vehicleRepository.findById(999L)).thenReturn(Optional.empty());
 
         assertThatThrownBy(() -> vehicleService.deactivateVehicle(999L))
-                .isInstanceOf(RuntimeException.class)
+                .isInstanceOf(NotFoundException.class)
                 .hasMessageContaining("Vehicle not found");
     }
 }

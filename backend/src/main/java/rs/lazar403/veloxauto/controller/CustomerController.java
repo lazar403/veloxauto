@@ -11,13 +11,13 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import rs.lazar403.veloxauto.dto.common.PagedResponse;
 import rs.lazar403.veloxauto.dto.customer.CustomerCreateRequest;
 import rs.lazar403.veloxauto.dto.customer.CustomerResponse;
 import rs.lazar403.veloxauto.dto.customer.CustomerUpdateRequest;
 import rs.lazar403.veloxauto.service.CustomerService;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("/api/customers")
@@ -38,8 +38,14 @@ public class CustomerController {
     }
 
     @GetMapping
-    public ResponseEntity<List<CustomerResponse>> getAllCustomers() {
-        return ResponseEntity.ok(customerService.getAllCustomers());
+    public ResponseEntity<PagedResponse<CustomerResponse>> getCustomers(
+            @RequestParam(required = false) Boolean active,
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "20") int size,
+            @RequestParam(defaultValue = "createdAt") String sortBy,
+            @RequestParam(defaultValue = "desc") String sortDir
+    ) {
+        return ResponseEntity.ok(customerService.getCustomers(active, page, size, sortBy, sortDir));
     }
 
     @PutMapping("/{id}")

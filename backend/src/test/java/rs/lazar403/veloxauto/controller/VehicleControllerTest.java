@@ -1,4 +1,5 @@
 package rs.lazar403.veloxauto.controller;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -6,6 +7,7 @@ import org.springframework.boot.webmvc.test.autoconfigure.WebMvcTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
+import rs.lazar403.veloxauto.dto.common.PagedResponse;
 import rs.lazar403.veloxauto.dto.vehicle.VehicleCreateRequest;
 import rs.lazar403.veloxauto.dto.vehicle.VehicleResponse;
 import rs.lazar403.veloxauto.dto.vehicle.VehicleUpdateRequest;
@@ -34,7 +36,7 @@ class VehicleControllerTest {
     private MockMvc mockMvc;
 
     @Autowired
-    private tools.jackson.databind.ObjectMapper objectMapper;
+    private ObjectMapper objectMapper;
 
     @MockitoBean
     private VehicleService vehicleService;
@@ -122,19 +124,19 @@ class VehicleControllerTest {
     // [======== GET ALL ========]
 
     @Test
-    void getAllVehicles_shouldReturn200WithList() throws Exception {
-        // arrange: service returns two vehicles
+    void getVehicles_shouldReturn200WithPage() throws Exception {
         VehicleResponse r1 = new VehicleResponse();
         r1.setId(1L);
         VehicleResponse r2 = new VehicleResponse();
         r2.setId(2L);
+        PagedResponse<VehicleResponse> page = new PagedResponse<>(List.of(r1, r2), 0, 20, 2, 1, true, true);
 
-        when(vehicleService.getAllVehicles()).thenReturn(List.of(r1, r2));
+        when(vehicleService.getVehicles(null, null, 0, 20, "createdAt", "desc")).thenReturn(page);
 
-        // assert: GET /api/vehicles returns array of size 2
         mockMvc.perform(get("/api/vehicles"))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.length()").value(2));
+                .andExpect(jsonPath("$.content.length()").value(2))
+                .andExpect(jsonPath("$.totalElements").value(2));
     }
 
     // [======== UPDATE ========]

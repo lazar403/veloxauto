@@ -1,10 +1,10 @@
 package rs.lazar403.veloxauto.service;
 
+import rs.lazar403.veloxauto.dto.common.PagedResponse;
 import rs.lazar403.veloxauto.dto.vehicle.VehicleCreateRequest;
 import rs.lazar403.veloxauto.dto.vehicle.VehicleResponse;
 import rs.lazar403.veloxauto.dto.vehicle.VehicleUpdateRequest;
-
-import java.util.List;
+import rs.lazar403.veloxauto.enums.VehicleStatus;
 
 public interface VehicleService {
 
@@ -12,7 +12,14 @@ public interface VehicleService {
 
     VehicleResponse getVehicleById(Long id);
 
-    List<VehicleResponse> getAllVehicles();
+    PagedResponse<VehicleResponse> getVehicles(
+            Boolean active,
+            VehicleStatus status,
+            int page,
+            int size,
+            String sortBy,
+            String sortDir
+    );
 
     VehicleResponse updateVehicle(Long id, VehicleUpdateRequest request);
 

@@ -16,6 +16,7 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Past;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -66,7 +67,8 @@ public class Customer {
     // [======== PASSWORD ========]
     @NotBlank(message = "Password is required")
     @Size(min = 6, message = "Password must be at least 6 characters long")
-    @Column(nullable = false, length = 100)
+    @JsonIgnore
+    @Column(nullable = false, length = 255)
     private String password;
 
     // [======== PHONE NUMBER ========]
