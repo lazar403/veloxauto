@@ -1,7 +1,7 @@
 import { toast } from "react-hot-toast";
 import { ApiErrorResponse } from "@/lib/api/types";
 
-const DEFAULT_BASE_URL = "http://localhost:8080";
+const DEFAULT_BASE_URL = "http://localhost:8081";
 
 function getBaseUrl() {
   return process.env.NEXT_PUBLIC_API_BASE_URL ?? DEFAULT_BASE_URL;
@@ -11,7 +11,6 @@ function resolveUrl(path: string) {
   if (/^https?:\/\//i.test(path)) {
     return path;
   }
-
   if (path.startsWith("/api/")) {
     return path;
   }

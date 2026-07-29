@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
+import Link from "next/link";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
@@ -90,6 +91,9 @@ export function DashboardOverview() {
           <p className="text-sm text-muted-foreground">Operational overview of inventory, leads, and promotions.</p>
         </div>
         <div className="flex flex-wrap items-center gap-2">
+          <Button size="sm" asChild>
+            <Link href="/vehicles">View inventory</Link>
+          </Button>
           {statusBadge}
           <Button variant={viewState === "success" ? "default" : "outline"} size="sm" onClick={() => setViewState("success")}>
             Success

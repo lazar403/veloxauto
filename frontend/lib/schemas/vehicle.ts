@@ -4,8 +4,7 @@ export const vehicleStatusSchema = z.enum([
   "AVAILABLE",
   "RESERVED",
   "SOLD",
-  "IN_SERVICE",
-  "DAMAGED",
+  "INACTIVE",
 ]);
 
 export const vehicleFilterSchema = z.object({
